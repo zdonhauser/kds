@@ -213,20 +213,15 @@ const KdsOrderBlock: React.FC<KdsOrderBlockProps> = ({
 
   return (
     <div
-      className={`
-        bg-gray-800 border border-gray-600 rounded-lg p-4 min-w-80 max-w-80
-        ${order.status === 'pending' ? 'border-yellow-500' : ''}
-        ${order.status === 'ready' ? 'border-green-500' : ''}
-        ${order.status === 'fulfilled' ? 'border-blue-500' : ''}
-        ${order.isFirst ? 'mt-0' : ''}
-        ${order.isLast ? 'mb-0' : ''}
-      `}
+      className={`kds-order ${order.status} ${order.isFirst ? "first" : ""} ${
+        order.isLast ? "last" : ""
+      } ${!order.isFirst && !order.isLast ? "middle" : ""}`}
       key={order.id}
     >
       {order.isFirst && (
-        <div className="flex justify-between items-center mb-4 border-b border-gray-600 pb-2">
+        <div className="order-header">
           <h3
-            className="text-xl font-bold border border-white rounded px-2 py-1 cursor-pointer select-none"
+            className="order-number"
             onMouseDown={handleOrderLongPressStart}
             onMouseUp={handleMouseUpOrLeave}
             onMouseLeave={handleMouseUpOrLeave}
@@ -243,7 +238,7 @@ const KdsOrderBlock: React.FC<KdsOrderBlockProps> = ({
           </h3>
           {order.name && (
             <h3
-              className="text-lg font-semibold cursor-pointer select-none"
+              className="name"
               onMouseDown={handleOrderLongPressStart}
               onMouseUp={handleMouseUpOrLeave}
               onMouseLeave={handleMouseUpOrLeave}
@@ -257,17 +252,15 @@ const KdsOrderBlock: React.FC<KdsOrderBlockProps> = ({
               {order.name || ""}
             </h3>
           )}
-          <div className="text-sm font-mono">
-            {["ready", "fulfilled"].includes(order.status) ? (
-              <b className="text-green-400">{completionTime}</b>
-            ) : (
-              <i className="text-yellow-400">{elapsedTime}</i>
-            )}
-          </div>
+          {["ready", "fulfilled"].includes(order.status) ? (
+            <b>{completionTime}</b>
+          ) : (
+            <i>{elapsedTime}</i>
+          )}
         </div>
       )}
 
-      <ul className="space-y-2">
+      <ul className="order-items">
         {oldestFirstItems.map((item) => {
           const status =
             item.prepared_quantity === item.quantity
@@ -277,9 +270,13 @@ const KdsOrderBlock: React.FC<KdsOrderBlockProps> = ({
               : "pending"
           
           return (
-            <li key={item.id} className="flex items-start space-x-3">
+            <li key={item.id}>
               <label
-                className="flex items-start space-x-2 cursor-pointer select-none w-full"
+                style={{
+                  textAlign: "left",
+                  display: "flex",
+                  alignItems: "center",
+                }}
                 onMouseDown={() => handleMouseDown(item.id, status)}
                 onMouseUp={handleMouseUpOrLeave}
                 onMouseLeave={handleMouseUpOrLeave}
@@ -294,38 +291,26 @@ const KdsOrderBlock: React.FC<KdsOrderBlockProps> = ({
                   checked={status !== "pending"}
                   readOnly
                   onChange={() => toggleItemStatus(item.id, status)}
-                  className={`
-                    mt-1 w-4 h-4 rounded border-2
-                    ${status === 'pending' ? 'border-gray-400 bg-gray-700' : ''}
-                    ${status === 'ready' ? 'border-green-400 bg-green-600' : ''}
-                    ${status === 'fulfilled' ? 'border-blue-400 bg-blue-600' : ''}
-                  `}
+                  className={`status-checkbox ${status}`}
                 />
-                <div className="flex-1">
-                  <div className={`
-                    font-medium
-                    ${status === 'pending' ? 'text-white' : ''}
-                    ${status === 'ready' ? 'text-green-300' : ''}
-                    ${status === 'fulfilled' ? 'text-blue-300' : ''}
-                    ${item.station === '1' ? 'border-l-4 border-red-400 pl-2' : ''}
-                    ${item.station === '2' ? 'border-l-4 border-blue-400 pl-2' : ''}
-                    ${item.station === '3' ? 'border-l-4 border-green-400 pl-2' : ''}
-                    ${item.station === '4' ? 'border-l-4 border-yellow-400 pl-2' : ''}
-                  `}>
-                    {item.quantity !== 1 ? `${item.quantity} × ` : ""}{item.item_name}
-                  </div>
+                <span
+                  className={`station-${item.station} ${status}`}
+                  style={{ marginLeft: "0.5rem" }}
+                >
+                  {item.quantity !== 1 ? item.quantity + " X " : ""}{" "}
+                  {item.item_name}
                   {item.special_instructions && (
-                    <div className="text-sm text-gray-400 mt-1 ml-2">
+                    <div className="instructions">
                       {item.special_instructions
                         .split(",")
                         .map((instruction, idx) => (
-                          <div key={`${instruction}-${idx}`} className="italic">
+                          <p key={`${instruction}-${idx}`}>
                             {instruction.split(":")[1]?.trim() || instruction}
-                          </div>
+                          </p>
                         ))}
                     </div>
                   )}
-                </div>
+                </span>
               </label>
             </li>
           )
@@ -334,7 +319,7 @@ const KdsOrderBlock: React.FC<KdsOrderBlockProps> = ({
 
       {order.isLast && (
         <div
-          className="mt-4 pt-4 border-t border-gray-600"
+          className="order-footer"
           onMouseDown={handleOrderLongPressStart}
           onMouseUp={handleMouseUpOrLeave}
           onMouseLeave={handleMouseUpOrLeave}
@@ -346,38 +331,32 @@ const KdsOrderBlock: React.FC<KdsOrderBlockProps> = ({
         >
           {order.status === "pending" && (
             <button
-              className={`
-                w-full py-2 px-4 rounded font-semibold transition-colors
-                bg-green-600 hover:bg-green-700 text-white
-                ${isLongPressActive ? 'animate-pulse bg-red-600' : ''}
-              `}
+              className={`all-ready-button ${
+                isLongPressActive && order.status === "pending" ? "flashing" : ""
+              }`}
               onClick={() => handleOrderStatus(order.id, "ready")}
             >
-              {isLongPressActive ? "Mark Pending" : "Mark Ready"}
+              {isLongPressActive && order.status === "pending" ? "Mark Pending" : "Mark Ready"}
             </button>
           )}
           {order.status === "ready" && (
             <button
-              className={`
-                w-full py-2 px-4 rounded font-semibold transition-colors
-                bg-blue-600 hover:bg-blue-700 text-white
-                ${isLongPressActive ? 'animate-pulse bg-red-600' : ''}
-              `}
+              className={`all-fulfilled-button ${
+                isLongPressActive && order.status === "ready" ? "flashing" : ""
+              }`}
               onClick={() => handleOrderStatus(order.id, "fulfilled")}
             >
-              {isLongPressActive ? "Mark Pending" : "Mark Fulfilled"}
+              {isLongPressActive && order.status === "ready" ? "Mark Pending" : "Mark Fulfilled"}
             </button>
           )}
           {order.status === "fulfilled" && (
             <button
-              className={`
-                w-full py-2 px-4 rounded font-semibold transition-colors
-                bg-gray-600 hover:bg-gray-700 text-white
-                ${isLongPressActive ? 'animate-pulse bg-red-600' : ''}
-              `}
+              className={`reverse-button ${
+                isLongPressActive && order.status === "fulfilled" ? "flashing" : ""
+              }`}
               onClick={() => restoreOrder(order.id)}
             >
-              {isLongPressActive ? "Mark Pending" : "Reverse"}
+              {isLongPressActive && order.status === "fulfilled" ? "Mark Pending" : "Reverse"}
             </button>
           )}
         </div>

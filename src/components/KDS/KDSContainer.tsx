@@ -507,11 +507,13 @@ const KDSContainer: React.FC<KDSContainerProps> = ({ mode = "kitchen" }) => {
 
   const getStationColor = (station: string): string => {
     switch (station) {
-      case '1': return 'text-red-400'
-      case '2': return 'text-blue-400'  
-      case '3': return 'text-green-400'
-      case '4': return 'text-yellow-400'
-      default: return 'text-gray-400'
+      case 'grill': return 'station-grill'
+      case 'prep': return 'station-prep'  
+      case 'fryer': return 'station-fryer'
+      case 'pickup': return 'station-pickup'
+      case 'pizza': return 'station-pizza'
+      case 'sweets': return 'station-sweets'
+      default: return 'station-default'
     }
   }
 
@@ -580,8 +582,8 @@ const KDSContainer: React.FC<KDSContainerProps> = ({ mode = "kitchen" }) => {
   }, [labeledOrders, availableHeight])
 
   return (
-    <div className="flex flex-col h-screen bg-black text-white font-sans select-none">
-      <div className="kds-carousel flex flex-wrap overflow-x-auto gap-4 h-full py-4 px-4 scrollbar-none">
+    <div className="kds-container">
+      <div className="kds-carousel">
         {splitOrders.map((order, index) => (
           <KdsOrderBlock
             key={`${order.id}-${index}`}
@@ -595,10 +597,10 @@ const KDSContainer: React.FC<KDSContainerProps> = ({ mode = "kitchen" }) => {
       </div>
       
       {mode === "kitchen" && (
-        <div className="bg-black border-t border-gray-600 p-4 min-h-20 hidden md:flex">
-          <ul className="flex flex-wrap gap-4 list-none">
+        <div className="kds-summary">
+          <ul>
             {Object.entries(summary).map(([itemName, { count, color }]) => (
-              <li key={itemName} className={`${color} font-semibold`}>
+              <li key={itemName} className={color}>
                 {itemName}: {count}
               </li>
             ))}

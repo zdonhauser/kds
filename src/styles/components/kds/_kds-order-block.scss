@@ -1,0 +1,314 @@
+@import './variables';
+
+// Global button styles inherited from original App.scss
+button {
+  background: black;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+  border: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  transition: all 0.2s ease;
+  width: 100%;
+
+  &:hover {
+    filter: contrast(115%);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.kds-order {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  width: calc(20% - 1rem);
+  min-width: 250px;
+  background-color: #000;
+  border-left: 3px solid #fff;
+  border-right: 3px solid #fff;
+  margin-right: 1rem;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  padding: 0.75rem;
+  text-align: left;
+
+  &.first {
+    border-top: 3px solid #fff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    
+    &:not(.last) {
+      height: 100%;
+    }
+  }
+
+  &.last {
+    border-bottom: 3px solid #fff;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  &.middle {
+    height: 100%;
+  }
+
+  &.pending {
+    border-color: #4caf50;
+  }
+
+  &.ready {
+    border-color: #4c66af;
+  }
+  
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
+    i {
+      font-size: 1rem;
+      color: #ccc;
+    }
+  }
+
+  p {
+    margin: 0.3rem 0;
+    font-size: 1.1rem;
+  }
+
+  ul.order-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  ul.order-items li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #444;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    strong {
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .instructions {
+      font-style: italic;
+      font-size: 1.2rem;
+      margin-top: 0.25rem;
+    }
+
+    .item-controls {
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+    }
+
+    .status-checkbox {
+      &.ready {
+        accent-color: #4caf50;
+      }
+      
+      &.fulfilled {
+        accent-color: #4c66af;
+      }
+    }
+  }
+
+  .order-footer {
+    margin-top: 0.5rem;
+
+    button.mark-ready {
+      background-color: #000;
+      color: #4caf50;
+      border: 2px solid #4caf50;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+
+      &:hover {
+        border-color: #43a047;
+      }
+    }
+
+    .all-ready-button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      display: block;
+      width: 100%;
+
+      &:hover {
+        background-color: #43a047;
+        filter: contrast(115%);
+      }
+
+      &.half {
+        width: 49%;
+        display: inline-block;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+    }
+    
+    .reverse-button {
+      background-color: #000;
+      color: white;
+      border: 2px solid white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      display: block;
+      width: 100%;
+
+      &:hover {
+        border-color: grey;
+        color: grey;
+        filter: contrast(115%);
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+    }
+    
+    .all-fulfilled-button {
+      background-color: #4c66af;
+      color: #fff;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      display: block;
+      width: 100%;
+
+      &:hover {
+        background-color: #4543a0;
+        filter: contrast(115%);
+      }
+
+      &.half {
+        width: 49%;
+        display: inline-block;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+    }
+  }
+}
+
+// Station colors for items
+.station-grill {
+  color: #00FFFF;
+}
+
+.station-prep {
+  color: #39FF14;
+}
+
+.station-fryer {
+  color: #FFD700;
+}
+
+.station-pickup {
+  color: #FFFFFF;
+}
+
+.station-pizza {
+  color: #FF6F00;
+}
+
+.station-sweets {
+  color: #FF2D95;
+}
+
+.station-default {
+  color: #CCCCCC;
+}
+
+span.fulfilled {
+  color: #4c66af !important;
+}
+
+span.ready {
+  color: #4caf50 !important;
+}
+
+@keyframes flash-border {
+  0% {
+    border-color: #fff;
+    background-color: #111;
+  }
+  50% {
+    border-color: #ffcc00;
+    background-color: #333;
+  }
+  100% {
+    border-color: #fff;
+    background-color: #111;
+  }
+}
+
+.kds-order.long-pressing {
+  animation: flash-border 0.5s infinite;
+}
+
+.kds-order .order-footer .flashing {
+  background-color: #ffcc00 !important;
+  color: #000 !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+.flashing {
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #ffc;
+  }
+  50% {
+    background-color: #ff0;
+  }
+  100% {
+    background-color: #ffc;
+  }
+}

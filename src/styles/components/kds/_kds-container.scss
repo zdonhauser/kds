@@ -1,0 +1,154 @@
+@import './variables';
+
+html, body {
+  overscroll-behavior-x: none;
+}
+
+// Global touch/interaction styles inherited from original App.scss
+* {
+  outline: none;
+}
+
+.kds-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 95vh;
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif; // Override system font with Arial for KDS consistency
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kds-header {
+  margin-bottom: 1rem;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-align: left;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #ccc;
+    text-align: left;
+  }
+}
+
+.kds-carousel {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  gap: 1rem;
+  height: 95vh;
+  align-content: flex-start;
+  justify-content: flex-start;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  .order-number {
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+  }
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.kds-summary {
+  background-color: #000;
+  color: #fff;
+  min-height: 5vh;
+  margin-top: 1rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    font-size: 1rem;
+  }
+}
+
+.station-grill {
+  color: #00FFFF;
+}
+
+.station-prep {
+  color: #39FF14;
+}
+
+.station-fryer {
+  color: #FFD700;
+}
+
+.station-pickup {
+  color: #FFFFFF;
+}
+
+.station-pizza {
+  color: #FF6F00;
+}
+
+.station-sweets {
+  color: #FF2D95;
+}
+
+.station-default {
+  color: #CCCCCC;
+}
+
+span.fulfilled {
+  color: #4c66af !important;
+}
+
+span.ready {
+  color: #4caf50 !important;
+}
+
+.status-dot {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: red;
+  
+  &.ok {
+    background: #61d836;
+  }
+}

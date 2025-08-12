@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Test</title>
+    <style>
+        /* Navigation styles extracted from original app */
+        .nav {
+            text-align: left;
+            z-index: 999;
+            background-color: rgb(36, 36, 36);
+            position: fixed;
+            height: 5vh;
+            width: 100vw;
+            bottom: 0;
+            margin-left: 0;
+            overflow: hidden;
+        }
+
+        .nav .navlink, .nav .navuser {
+            margin-top: 1vh;
+            margin-left: 2vw;
+            font-size: 2vh;
+            float: left;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 0 0 3px black;
+        }
+
+        .nav .navlink a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 0 0 3px black;
+        }
+
+        .nav .navlink img {
+            max-height: 2vh;
+            width: auto;
+        }
+
+        .nav-closed .navtext {
+            display: none;
+        }
+
+        .nav-open {
+            height: 100vh;
+        }
+
+        .nav-open .navlink, .nav-open .navuser {
+            width: 100vw;
+            padding: 0.5vh;
+            margin-left: 0;
+            margin-right: 0;
+            font-size: 2vh;
+            border-bottom: 5px solid white;
+        }
+
+        .nav-open .navlink img {
+            height: 2vh;
+            max-height: 2vh;
+            bottom: 0;
+            margin-right: 5vw;
+        }
+
+        /* App content area */
+        .app-content {
+            padding-bottom: 5vh;
+            height: 95vh;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-content">
+        <h1>Navigation Test</h1>
+    </div>
+
+    <div class="nav no-print nav-closed" id="nav">
+        <span class="navlink">
+            <span onclick="toggleMenu()">
+                <img src="/menu.png" height="25" alt="☰" />
+                <span class="navtext">Menu</span>
+            </span>
+        </span>
+
+        <span class="navlink">
+            <a href="/kitchen">
+                <img src="/kds.png" height="25" alt="🍳" />
+                <span class="navtext">Kitchen KDS</span>
+            </a>
+        </span>
+
+        <span class="navlink">
+            <a href="/pickup">
+                <img src="/pickup.png" height="25" alt="📦" />
+                <span class="navtext">Pickup KDS</span>
+            </a>
+        </span>
+
+        <span class="navlink">
+            <a href="/recall">
+                <img src="/recall.png" height="25" alt="🔄" />
+                <span class="navtext">Recall KDS</span>
+            </a>
+        </span>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('nav');
+            if (nav.classList.contains('nav-open')) {
+                nav.classList.remove('nav-open');
+                nav.classList.add('nav-closed');
+            } else {
+                nav.classList.remove('nav-closed');
+                nav.classList.add('nav-open');
+            }
+        }
+    </script>
+</body>
+</html>

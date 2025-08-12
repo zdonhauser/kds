@@ -1,44 +1,51 @@
 'use client'
 
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const Navigation = () => {
+  const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
-  
-  const navItems = [
-    { href: '/kitchen', label: 'Kitchen', icon: '👨‍🍳' },
-    { href: '/pickup', label: 'Pickup', icon: '📦' },
-    { href: '/recall', label: 'Recall', icon: '🔄' },
-  ]
+
+  const handleMenu = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const closeMenu = () => {
+    setIsOpen(false)
+  }
 
   return (
-    <nav className="bg-gray-800 border-b border-gray-700">
-      <div className="flex items-center justify-between px-6 py-3">
-        <Link href="/" className="text-xl font-bold text-white">
-          KDS System
+    <div className={`nav no-print ${isOpen ? 'nav-open' : 'nav-closed'}`}>
+      <span className="navlink">
+        <span onClick={handleMenu}>
+          <img src="/menu.png" height="25" alt="" />
+          <span className="navtext">Menu</span>
+        </span>
+      </span>
+
+      <span className="navlink">
+        <Link href="/kitchen" onClick={closeMenu}>
+          <img src="/kds.png" height="25" alt="" />
+          <span className="navtext">Kitchen KDS</span>
         </Link>
-        
-        <div className="flex space-x-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`
-                px-4 py-2 rounded-md text-sm font-medium transition-colors
-                ${pathname === item.href 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                }
-              `}
-            >
-              <span className="mr-2">{item.icon}</span>
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      </div>
-    </nav>
+      </span>
+
+      <span className="navlink">
+        <Link href="/pickup" onClick={closeMenu}>
+          <img src="/pickup.png" height="25" alt="" />
+          <span className="navtext">Pickup KDS</span>
+        </Link>
+      </span>
+
+      <span className="navlink">
+        <Link href="/recall" onClick={closeMenu}>
+          <img src="/recall.png" height="25" alt="" />
+          <span className="navtext">Recall KDS</span>
+        </Link>
+      </span>
+    </div>
   )
 }
 

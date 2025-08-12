@@ -1,0 +1,72 @@
+// KDS Color Variables
+$black: #000000;
+$white: #ffffff;
+
+// Gray scale
+$gray-400: #9ca3af;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+
+// Status colors
+$yellow-400: #fbbf24;
+$yellow-500: #f59e0b;
+$green-300: #86efac;
+$green-400: #4ade80;
+$green-500: #22c55e;
+$green-600: #16a34a;
+$green-700: #15803d;
+$blue-300: #93c5fd;
+$blue-400: #60a5fa;
+$blue-500: #3b82f6;
+$blue-600: #2563eb;
+$blue-700: #1d4ed8;
+$red-400: #f87171;
+$red-600: #dc2626;
+
+// Spacing
+$spacing-1: 0.25rem;   // 4px
+$spacing-2: 0.5rem;    // 8px
+$spacing-3: 0.75rem;   // 12px
+$spacing-4: 1rem;      // 16px
+$spacing-5: 1.25rem;   // 20px
+$spacing-6: 1.5rem;    // 24px
+$spacing-8: 2rem;      // 32px
+$spacing-12: 3rem;     // 48px
+$spacing-16: 4rem;     // 64px
+$spacing-20: 5rem;     // 80px
+
+// Border radius
+$rounded: 0.25rem;     // 4px
+$rounded-lg: 0.5rem;   // 8px
+
+// Font sizes
+$text-sm: 0.875rem;    // 14px
+$text-base: 1rem;      // 16px
+$text-lg: 1.125rem;    // 18px
+$text-xl: 1.25rem;     // 20px
+
+// Font weights
+$font-medium: 500;
+$font-semibold: 600;
+$font-bold: 700;
+
+// Dimensions
+$min-w-80: 20rem;      // 320px
+$max-w-80: 20rem;      // 320px
+$w-4: 1rem;            // 16px
+$h-4: 1rem;            // 16px
+$min-h-20: 5rem;       // 80px
+
+// Line heights
+$leading-none: 1;
+$leading-tight: 1.25;
+$leading-normal: 1.5;
+
+// Z-index
+$z-10: 10;
+$z-20: 20;
+$z-50: 50;
+
+// Transition
+$transition-colors: color 150ms ease-in-out, background-color 150ms ease-in-out, border-color 150ms ease-in-out;

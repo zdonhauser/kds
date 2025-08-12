@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDS Test</title>
+    <style>
+        /* Copy of the original KDS styles for testing */
+        html, body {
+            overscroll-behavior-x: none;
+        }
+
+        .kds-container {
+            display: flex;
+            position: relative;
+            flex-direction: column;
+            height: 95vh;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .kds-carousel {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            overflow-x: auto;
+            gap: 1rem;
+            height: 95vh;
+            align-content: flex-start;
+            justify-content: flex-start;
+        }
+
+        .kds-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .kds-carousel {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .kds-order {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 0 0 auto;
+            width: calc(20% - 1rem);
+            min-width: 250px;
+            background-color: #000;
+            border-left: 3px solid #fff;
+            border-right: 3px solid #fff;
+            margin-right: 1rem;
+            box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .kds-order.first {
+            border-top: 3px solid #fff;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .kds-order.last {
+            border-bottom: 3px solid #fff;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .kds-order.pending {
+            border-color: #4caf50;
+        }
+
+        .kds-order.ready {
+            border-color: #4c66af;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .order-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .order-number {
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+        }
+
+        ul.order-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        ul.order-items li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #444;
+        }
+
+        .station-grill { color: #00FFFF; }
+        .station-prep { color: #39FF14; }
+        .station-fryer { color: #FFD700; }
+        .station-pickup { color: #FFFFFF; }
+        .station-pizza { color: #FF6F00; }
+        .station-sweets { color: #FF2D95; }
+        .station-default { color: #CCCCCC; }
+
+        span.fulfilled { color: #4c66af !important; }
+        span.ready { color: #4caf50 !important; }
+
+        .status-checkbox.ready { accent-color: #4caf50; }
+        .status-checkbox.fulfilled { accent-color: #4c66af; }
+
+        .order-footer {
+            margin-top: 0.5rem;
+        }
+
+        /* Global button styles inherited from original App.scss */
+        button {
+            background: black;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            border: 0;
+            padding: 12px 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            filter: contrast(115%);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        /* Global touch/interaction styles */
+        * {
+            outline: none;
+        }
+
+        .all-ready-button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: Arial, sans-serif;
+            font-weight: 600;
+            display: block;
+            width: 100%;
+        }
+
+        .all-ready-button:hover {
+            background-color: #43a047;
+            filter: contrast(115%);
+        }
+
+        .all-fulfilled-button {
+            background-color: #4c66af;
+            color: #fff;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: Arial, sans-serif;
+            font-weight: 600;
+            display: block;
+            width: 100%;
+        }
+
+        .all-fulfilled-button:hover {
+            background-color: #4543a0;
+            filter: contrast(115%);
+        }
+
+        .reverse-button {
+            background-color: #000;
+            color: white;
+            border: 2px solid white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: Arial, sans-serif;
+            font-weight: 600;
+            display: block;
+            width: 100%;
+        }
+
+        .reverse-button:hover {
+            border-color: grey;
+            color: grey;
+            filter: contrast(115%);
+        }
+
+        .kds-summary {
+            background-color: #000;
+            color: #fff;
+            min-height: 5vh;
+            margin-top: 1rem;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1rem;
+        }
+
+        .kds-summary ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="kds-container">
+        <div class="kds-carousel">
+            <!-- Test Order 1 - Pending -->
+            <div class="kds-order pending first last">
+                <div class="order-header">
+                    <h3 class="order-number">123</h3>
+                    <h3 class="name">John Doe</h3>
+                    <i>2:30</i>
+                </div>
+                <ul class="order-items">
+                    <li>
+                        <label style="text-align: left; display: flex; align-items: center;">
+                            <input type="checkbox" class="status-checkbox pending" />
+                            <span class="station-grill pending" style="margin-left: 0.5rem;">
+                                2 X Burger
+                                <div class="instructions">
+                                    <p>No onions</p>
+                                    <p>Extra cheese</p>
+                                </div>
+                            </span>
+                        </label>
+                    </li>
+                    <li>
+                        <label style="text-align: left; display: flex; align-items: center;">
+                            <input type="checkbox" class="status-checkbox ready" checked />
+                            <span class="station-fryer ready" style="margin-left: 0.5rem;">
+                                1 X Fries
+                            </span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="order-footer">
+                    <button class="all-ready-button">Mark Ready</button>
+                </div>
+            </div>
+
+            <!-- Test Order 2 - Ready -->
+            <div class="kds-order ready first last">
+                <div class="order-header">
+                    <h3 class="order-number">124</h3>
+                    <h3 class="name">Jane Smith</h3>
+                    <b>1:45</b>
+                </div>
+                <ul class="order-items">
+                    <li>
+                        <label style="text-align: left; display: flex; align-items: center;">
+                            <input type="checkbox" class="status-checkbox ready" checked />
+                            <span class="station-pizza ready" style="margin-left: 0.5rem;">
+                                1 X Pizza Margherita
+                            </span>
+                        </label>
+                    </li>
+                    <li>
+                        <label style="text-align: left; display: flex; align-items: center;">
+                            <input type="checkbox" class="status-checkbox ready" checked />
+                            <span class="station-prep ready" style="margin-left: 0.5rem;">
+                                1 X Caesar Salad
+                            </span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="order-footer">
+                    <button class="all-fulfilled-button">Mark Fulfilled</button>
+                </div>
+            </div>
+
+            <!-- Test Order 3 - Fulfilled -->
+            <div class="kds-order fulfilled first last">
+                <div class="order-header">
+                    <h3 class="order-number">125</h3>
+                    <b>3:20</b>
+                </div>
+                <ul class="order-items">
+                    <li>
+                        <label style="text-align: left; display: flex; align-items: center;">
+                            <input type="checkbox" class="status-checkbox fulfilled" checked />
+                            <span class="station-sweets fulfilled" style="margin-left: 0.5rem;">
+                                1 X Ice Cream
+                            </span>
+                        </label>
+                    </li>
+                </ul>
+                <div class="order-footer">
+                    <button class="reverse-button">Reverse</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="kds-summary">
+            <ul>
+                <li class="station-grill">Burger: 2</li>
+                <li class="station-fryer">Fries: 0</li>
+                <li class="station-pizza">Pizza: 0</li>
+                <li class="station-prep">Salad: 0</li>
+                <li class="station-sweets">Ice Cream: 0</li>
+                <li style="color: #AAAAAA;">Total Orders: 3</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

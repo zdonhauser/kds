@@ -1,0 +1,75 @@
+// Navigation styles extracted from original app
+.nav {
+  text-align: left;
+  z-index: 999;
+  background-color: rgb(36, 36, 36);
+  position: fixed;
+  height: 5vh;
+  width: 100vw;
+  bottom: 0;
+  margin-left: 0;
+  overflow: hidden;
+
+  .navlink, .navuser {
+    margin-top: 1vh;
+    margin-left: 2vw;
+    font-size: 2vh;
+    @media screen and (min-width: 600px) {
+      font-size: 2vh;
+    }
+    float: left;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 0 0 3px black;
+    
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      text-shadow: 0 0 3px black;
+    }
+    
+    img {
+      max-height: 2vh;
+      width: auto;
+    }
+  }
+}
+
+.nav-closed {
+  .navuser {
+    margin-right: 5vw;
+    float: right;
+  }
+  
+  .navtext {
+    display: none;
+  }
+}
+
+.nav-open {
+  height: 100vh;
+  
+  .navlink, .navuser {
+    width: 100vw;
+    padding: 0.5vh;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 2vh;
+    border-bottom: 5px solid white;
+    
+    img {
+      height: 2vh;
+      max-height: 2vh;
+      bottom: 0;
+      margin-right: 5vw;
+    }
+  }
+}
+
+@media print {
+  .nav, .nav * {
+    display: none !important;
+  }
+}
